@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "614de295128a2cc8502da4c27f944e44",
+    "content-hash": "ce3054983b1eb5c262d8987f82386955",
     "packages": [
         {
             "name": "brick/math",
@@ -2876,11 +2876,11 @@
         },
         {
             "name": "sette/google-play-billing",
-            "version": "v1.5.1",
+            "version": "v1.5.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/SETTE-ENGINEERING/google-play-billing-1.git",
-                "reference": "2d26203536efec0921f8ede90826db93628ea5af"
+                "reference": "e20d26f27859bb94114f395b2695cbef01ab7ddc"
             },
             "require": {
                 "ext-json": "*",
@@ -2938,7 +2938,7 @@
                 }
             ],
             "description": "Google Play Billing",
-            "time": "2023-06-04T17:36:04+00:00"
+            "time": "2023-06-04T18:52:54+00:00"
         },
         {
             "name": "stella-maris/clock",
