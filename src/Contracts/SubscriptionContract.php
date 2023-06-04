@@ -7,6 +7,7 @@ namespace Imdhemy\Purchases\Contracts;
 use Imdhemy\AppStore\Receipts\ReceiptResponse;
 use Imdhemy\AppStore\ServerNotifications\V2DecodedPayload;
 use Imdhemy\GooglePlay\Subscriptions\SubscriptionPurchase;
+use Imdhemy\GooglePlay\Subscriptions\SubscriptionPurchaseV2;
 use Imdhemy\Purchases\ValueObjects\Time;
 
 /**
@@ -27,7 +28,7 @@ interface SubscriptionContract
     public function getUniqueIdentifier(): string;
 
     /**
-     * @return mixed|SubscriptionPurchase|ReceiptResponse|V2DecodedPayload
+     * @return mixed|SubscriptionPurchase|SubscriptionPurchaseV2|ReceiptResponse|V2DecodedPayload
      */
     public function getProviderRepresentation();
 }

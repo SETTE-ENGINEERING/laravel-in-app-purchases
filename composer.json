@@ -1,5 +1,5 @@
 {
-  "name": "imdhemy/laravel-purchases",
+  "name": "sette/laravel-purchases",
   "description": "The top-notch Laravel receipt validator.",
   "keywords": [
     "laravel-in-app-purchases",
@@ -16,12 +16,19 @@
       "email": "imdhemy@gmail.com"
     }
   ],
+  "repositories": [
+    {
+      "url": "https://github.com/SETTE-ENGINEERING/google-play-billing-1.git",
+      "type": "git",
+      "canonical": true
+    }
+  ],
   "require": {
     "php": ">=8.0",
     "ext-json": "*",
     "ext-openssl": "*",
     "imdhemy/appstore-iap": "^1.6",
-    "imdhemy/google-play-billing": "^1.4",
+    "sette/google-play-billing": "v1.5.1",
     "laravel/framework": ">=8.0"
   },
   "require-dev": {

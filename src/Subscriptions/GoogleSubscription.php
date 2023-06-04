@@ -9,6 +9,7 @@ use GuzzleHttp\Exception\GuzzleException;
 use Imdhemy\GooglePlay\DeveloperNotifications\DeveloperNotification;
 use Imdhemy\GooglePlay\DeveloperNotifications\SubscriptionNotification;
 use Imdhemy\GooglePlay\Subscriptions\SubscriptionPurchase;
+use Imdhemy\GooglePlay\Subscriptions\SubscriptionPurchaseV2;
 use Imdhemy\Purchases\Contracts\SubscriptionContract;
 use Imdhemy\Purchases\Exceptions\InvalidNotificationTypeException;
 use Imdhemy\Purchases\Facades\Subscription;
@@ -16,8 +17,7 @@ use Imdhemy\Purchases\ValueObjects\Time;
 
 class GoogleSubscription implements SubscriptionContract
 {
-    protected SubscriptionPurchase $subscription;
-
+    protected SubscriptionPurchase|SubscriptionPurchaseV2 $subscription;
     protected string $itemId;
 
     protected string $token;
@@ -25,7 +25,11 @@ class GoogleSubscription implements SubscriptionContract
     /**
      * GoogleSubscription constructor.
      */
-    public function __construct(SubscriptionPurchase $subscription, string $itemId, string $token)
+    public function __construct(
+        SubscriptionPurchase|SubscriptionPurchaseV2 $subscription,
+        string                                      $itemId,
+        string                                      $token
+    )
     {
         $this->subscription = $subscription;
         $this->itemId = $itemId;
@@ -37,12 +41,13 @@ class GoogleSubscription implements SubscriptionContract
      */
     public static function createFromDeveloperNotification(
         DeveloperNotification $rtdNotification,
-        ?ClientInterface $client = null
-    ): self {
+        ?ClientInterface      $client = null
+    ): self
+    {
         $notification = $rtdNotification->getPayload();
 
         // Make sure the notification is a subscription notification
-        if (! $notification instanceof SubscriptionNotification) {
+        if (!$notification instanceof SubscriptionNotification) {
             throw InvalidNotificationTypeException::create(SubscriptionNotification::class, get_class($notification));
         }
 
@@ -64,8 +69,7 @@ class GoogleSubscription implements SubscriptionContract
     public function getExpiryTime(): Time
     {
         $time = $this->subscription->getExpiryTime();
-        assert(! is_null($time));
-
+        assert(!is_null($time));
         return Time::fromGoogleTime($time);
     }
 
@@ -84,7 +88,7 @@ class GoogleSubscription implements SubscriptionContract
         return $this->token;
     }
 
-    public function getProviderRepresentation(): SubscriptionPurchase
+    public function getProviderRepresentation(): SubscriptionPurchase|SubscriptionPurchaseV2
     {
         return $this->subscription;
     }

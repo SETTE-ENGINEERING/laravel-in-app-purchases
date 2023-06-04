@@ -13,7 +13,8 @@ use Imdhemy\AppStore\Receipts\Verifier;
 use Imdhemy\GooglePlay\ClientFactory as GooglePlayClientFactory;
 use Imdhemy\GooglePlay\Subscriptions\SubscriptionClient as GooglePlaySubscription;
 use Imdhemy\GooglePlay\Subscriptions\SubscriptionPurchase;
-use Imdhemy\GooglePlay\ValueObjects\EmptyResponse;
+use Imdhemy\GooglePlay\Subscriptions\SubscriptionPurchaseV2;
+use Imdhemy\GooglePlay\ValueObjects\V1\EmptyResponse;
 use Imdhemy\Purchases\Contracts\SubscriptionContract;
 use Imdhemy\Purchases\Subscriptions\AppStoreSubscription;
 use Imdhemy\Purchases\Subscriptions\GoogleSubscription;
@@ -34,7 +35,7 @@ class Subscription
 
     protected bool $renewalAble = false;
 
-    protected ?SubscriptionPurchase $googleGetResponse = null;
+    protected SubscriptionPurchase|SubscriptionPurchaseV2|null $googleGetResponse = null;
 
     protected bool $isGoogle = false;
 
@@ -104,9 +105,9 @@ class Subscription
     public function verifyReceipt(?ClientInterface $sandboxClient = null): ReceiptResponse
     {
         if (is_null($this->appStoreResponse)) {
-            assert(! is_null($this->client));
-            assert(! is_null($this->receiptData));
-            assert(! is_null($this->password));
+            assert(!is_null($this->client));
+            assert(!is_null($this->receiptData));
+            assert(!is_null($this->password));
 
             $verifier = new Verifier($this->client, $this->receiptData, $this->password);
             $this->appStoreResponse = $verifier->verify($this->renewalAble, $sandboxClient);
@@ -194,7 +195,7 @@ class Subscription
     /**
      * @throws GuzzleException
      */
-    public function get(): SubscriptionPurchase
+    public function get(): SubscriptionPurchase|SubscriptionPurchaseV2
     {
         if (is_null($this->googleGetResponse)) {
             $this->googleGetResponse = $this->createSubscription()->get();
